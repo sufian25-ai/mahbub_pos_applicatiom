@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('type', ['in', 'out', 'adjustment']);
             $table->decimal('quantity', 12, 3);
             $table->text('note')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

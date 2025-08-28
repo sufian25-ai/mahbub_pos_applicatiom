@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Stock_movement extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'product_id',
+        'type',
+        'quantity',
+        'note', // e.g., 'in' or 'out'
+       'created_by'
+    ];
 }

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete('cascade');
             $table->string('name');
+            $table->string('image')->nullable();
             $table->string('sku')->unique();
             $table->string('barcode')->nullable()->unique();
-            $table->enum('unit',['piece', 'kg', 'gram', 'litre', 'meter'])->default('piece');
+            $table->enum('unit',['piece', 'kg', 'litre'])->default('piece');
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('stock', 12, 3)->default(0);
             $table->decimal('vat_parcent', 5, 2)->default(0);
