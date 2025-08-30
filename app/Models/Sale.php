@@ -30,11 +30,10 @@ class Sale extends Model
     public static function nextInvoiceNumber(): string
     {
         $prefix = 'INV-'.Now()->format('Ymd').'-';
-        $lastSale = self::where('invoice_number', 'like', $prefix.'%')->orderBy('invoice_number', 'desc')->first();
+        $lastSale = self::where('invoice_number', 'like', $prefix.'%')->max('invoice_number');
         if (!$lastSale) 
             return $prefix.'0001';
-        $n = (int) substr($lastSale->invoice_number, strlen($prefix));
-        $n++;
+        $n = (int) substr($lastSale, -4) + 1;
         return $prefix.str_pad($n, 4, '0', STR_PAD_LEFT);   
      
     }
