@@ -19,6 +19,7 @@ class Product extends Model
         'vat_parcent',
         'is_active'  
     ];
+    protected $appends = ['image_path'];
     public function setBarcodeAttribute($value)
     {
         $this->attributes['barcode'] = ($value  === '' ? null : $value );
@@ -26,6 +27,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Categories::class);
+    }
+    public function getImagePathAttribute()
+    {
+        return asset('storage/images/products/' . $this->image);
     }
     
        

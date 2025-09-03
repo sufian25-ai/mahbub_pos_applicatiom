@@ -7,16 +7,25 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function search(Request $request)
-    {
-    	$q = trim((string)$request->query('q',''));
-    	$items = Product::query()->where($q !== '', function($qry) use ($q){
+   public function search(Request $request)
+{
+    $q = trim((string)$request->query('q',''));
 
-    		$qry->where('name', 'like', "%{$q}%")->orWhere('sku','like',"%{$q}%")->orWhere('barcode','like',"%{$q}%")->orWhere('id', intval($q));
-    	})->where('is_active', true)->orderBy('name')->limit(20)->get();
+    $items = Product::query()
+        ->when($q !== '', function($qry) use ($q) {
+            $qry->where('name', 'like', "%{$q}%")
+                ->orWhere('sku', 'like', "%{$q}%")
+                ->orWhere('barcode', 'like', "%{$q}%")
+                ->orWhere('id', intval($q));
+        })
+        ->where('is_active', true)
+        ->orderBy('name')
+        ->limit(20)
+        ->get();
 
-    	return response()->json($items);
-    }
+    return response()->json($items);
+}
+
 
     public function find(Request $request)
     {
